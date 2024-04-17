@@ -1,0 +1,17 @@
+1. MongoDB 세션에 접근합니다.
+
+$ mongosh
+
+2. Mongo Shell 에 접근한 위 아래에 쿼리 중 필요한 쿼리를 사용하여 유저를 생성합니다.
+
+ # db 선택
+use admin;
+
+ # 아이디 = 'userId', 비밀번호 = 'userPw' 를 설정하고 root 권한을 부여한 아이디를 생성합니다.
+db.createUser({user : "userName", pwd : "userPassword", roles:["root"]} );
+
+ # 쓰기 읽기 권한 = 'readWrite', 타겟 데이터 베이스 = 'dbName' 
+db.createUser({user : 'userName', pwd : 'userPassword', roles: [{ role: 'readWrite', db:'dbName'}]});
+
+ # 유저에게 root 권한을 주고 싶을때 (유저 관리 권한, 디비 접근 권한, 디비 읽기 쓰기 권한)
+db.createUser({user : 'userName', pwd : 'userPassword', roles: [ "userAdminAnyDatabase",  "dbAdminAnyDatabase",  "readWriteAnyDatabase"]});
