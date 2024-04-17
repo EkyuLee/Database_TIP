@@ -1,0 +1,106 @@
+ mongodb 를 설치하는 방법에 대해 알아보겠습니다.
+
+설치 OS는 linux Ubuntu 입니다.
+
+'$' 가 붙은 코드의 경우 terminal에서 작성해주시면 되고, 다른 경우 특정 파일내에 추가하는 코드 내용입니다.
+
+코드 내에 있는 # 의 경우 주석입니다.
+
+
+
+
+
+1. 설치하기전에 'gnupg' 와 'curl' 패키지가 설치되어 있지 않다면, 아래의 방법을 통하여 설치를 진행합니다.
+
+$ sudo apt-get install gnupg curl
+
+
+2. 패키지 일관성 훼손을 막기 위해 GPG key import 코드를 아래와 같이 입력합니다.
+
+    ##만약, 직접 설치를 원하실 경우 https://pgp.mongodb.com/server-7.0.asc 를 클릭하여 설치해주시기 바랍니다.
+
+$ curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+   sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+   --dearmor
+
+
+3. 몽고디비를 위한 리스트 파일 생성. (우분투 버전 확인 후 버전에 맞는 리스트를 생성하시면 됩니다.)
+
+  ## ubuntu 20.04
+$ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+ ## ubuntu 22.04
+$ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+
+
+4. 로컬 패키지 데이터베이스를 reload 합니다.
+
+$ sudo apt-get update
+
+
+5 . mongodb-org 설치를 진행합니다.
+
+ ## 가장 최신 버전의 mongodb를 설치할 경우
+$ sudo apt-get install -y mongodb-org
+## 특정 버전의 mongodb를 설치할 경우 
+$ sudo apt-get install -y mongodb-org=7.0 mongodb-org-database=7.0 mongodb-org-server=7.0 mongodb-mongosh=7.0 mongodb-org-mongos=7.0 mongodb-org-tools=7.0
+
+## 만약 'mongodb-org=7.0' 만 설치할 경우 나머지 컴포넌트는 최신버전이 자동으로 설치 됩니다.
+5-1. mongodb 패키지 버전을 변경하지 않으려면 아래의 내용대로 설정해줍니다.
+
+ ## 설치 완료 후 mongodb 컴포넌트 패키지의 버전을 고정하고 싶다면 아래의 내용을 실행합니다.
+$ echo "mongodb-org hold" | sudo dpkg --set-selections
+$ echo "mongodb-org-database hold" | sudo dpkg --set-selections
+$ echo "mongodb-org-server hold" | sudo dpkg --set-selections
+$ echo "mongodb-mongosh hold" | sudo dpkg --set-selections
+$ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
+$ echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+
+
+
+
+6. MongoDB 실행하기 (systemctl 혹은 service 이용)
+
+ # systemctl 을 이용한 실행방법
+$ sudo systemctl start mongod
+
+ # service 를 이용한 실행방법
+$ sudo service mongod start
+
+
+7. MongoDB 정지하기
+
+ # systemctl 을 이용
+$ sudo systemctl stop mongod
+
+ # service 을 이용
+$ sudo service mongod stop
+
+
+8. MongoDB 재시작하기
+
+ # systemctl 이용
+$ sudo systemctl restart mongod
+
+ # service 이용
+$ sudo service mongod restart
+
+
+9. Mongodb Session 접근하기
+
+ # Default port = 27017
+$ mongosh
+
+
+
+
+
+위와같이 설치를 진행하면 됩니다.
+
+
+
+다음편에는 포트 설정, 접근정보 설정 보안 등을 다루도록 하겠습니다.
+
+
+
+감사합니다.
+
