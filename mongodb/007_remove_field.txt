@@ -1,0 +1,8 @@
+- 내용이 포함된 필드만 삭제 
+
+db.{documentName}.updateMany({조건},{"$unset" : {필드명 : 내용}})
+
+
+- 내용 상관없이 해당 필드 삭제
+
+db.{documentName}.updateMany({조건},{"$unset" : {필드명 : ""}})
