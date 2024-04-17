@@ -1,0 +1,54 @@
+Create, Insert, Select, Delete, Update 방법에 대한 기록.
+
+CREATE (데이터베이스 생성)
+
+ # DBNAME = 생성할 데이터 베이스 이름
+use DBNAME;
+
+
+INSERT (입력)
+
+ # dbName = 데이터 베이스 이름
+use dbName 
+
+ # CollectionName = 컬렉션 이름
+db.CollectionName.save({'KeyName':'KeyValue'})
+
+
+SELECT (조회)
+
+ # dbName = 데이터 베이스 이름
+use dbName;
+
+ # 전체 데이터 보기
+db.CollectionName.find();
+
+ # 데이터베이스 설정 정보 보기
+db.CollectionName.find().explain();
+
+ # 특정 컬럼에 특정 데이터 조건이 일치하는 데이터 보기
+db.CollectionName.find({'KeyName' : 'KeyValue'});
+
+ # 조건 입력 예시 name 이 kildong 이며 _id 가 1 인것을 조회
+db.CollectionName.find({name:'kildong', age : 22});
+
+ # 조건에 따라 특정 필드만 조회 (조건에 맞는 class 필드만 조회)
+db.CollectionName.find({name:'kildong', age : 22}, {'class' : 1});
+
+DELETE
+
+ # dbName = 데이터 베이스 이름
+use dbName 
+
+ # 특정 조건에 대한 내용을 삭제 
+db.CollectionName.remove({name:"kildong", _id : 1})
+
+UPDATE
+
+ # dbName = 데이터 베이스 이름
+use dbName 
+
+ # db.CollectionName.update({조건}, {$set:반영물});
+db.CollectionName.update({_id: 1 }, {$set:{'KeyName' : 'KeyValue'}} );
+
+
