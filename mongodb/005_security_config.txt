@@ -1,0 +1,30 @@
+1. MongoDB가 실행되고 있는지 프로세스 확인을 합니다.
+
+$ ps -ef|grep mongodb
+2. (설정파일을 직접 수정하는 방법)MongoDB 설정파일에 접근하여 내용을 수정합니다. 
+
+ # conf 파일에 접근하기
+$ sudo vim /etc/mongod.conf
+
+ # 전체 아이피 접근 허용 기존(bind_ip = 127.0.0.7) 에서 아이피 부분을 0.0.0.0 으로 바꿉니다.
+bind_ip = 0.0.0.0 
+
+ # 특정 아이피만 접근을 허용할 경우 콤마(,)를 이용하여 구분을 합니다.
+bind_ip = 192.168.0.11, 192.168.0.12
+2-1. (터미널에서 바로 설정하는 방법) 터미널에서 아래의 내용을 직접 입력합니다.
+
+ # ip 를 입력해서 오픈하는 방법
+$ mongod --bind_ip 0.0.0.0
+
+ # ip 전체를 바인딩 하는 방법
+$ mongod --bind_ip_all
+
+
+3. MongoDB 를 재시작합니다.
+
+$ sudo systemctl restart mongod
+
+
+4. 포트 바인딩이 완료 되었는지 확인합니다 (Default = 27017)
+
+netstat -tnlp
