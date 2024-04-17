@@ -1,0 +1,19 @@
+1. index가 설정되어 있는지 확인합니다.
+
+ #{documentName} 의 인덱스 항목 조회
+db.{documentName}.getIndexes();
+
+
+2. 원하는 설정을 입력하여 index를 추가 합니다. (1 = 오름차순, -1 = 내림차순)
+
+ # filed_a 를 내림차순 인덱스 인덱스명 ({indexName}) 으로 설정
+db.{documentName}.createIndex({"field_a" : -1}, {name : "{indexName}"})
+
+ # filed_b 를 오름차순 인덱스 인덱스명 ({indexName}) 으로 설정
+db.{documentName}.createIndex({"field_b" : 1}, {name : "{indexName}"})
+
+
+3. 조회 쿼리를 사용하여 속도 확인
+
+ # 데이터베이스 조회 속도 측정, 값이 낮을수록 리턴속도가 빠른것입니다.
+db.{documentName}.find().explain("executionStats").executionStats.executionTimeMillis;
